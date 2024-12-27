@@ -1,4 +1,5 @@
 import './App.css';
+import TimeBoard from './components/TimeBoard';
 import CongestionBoard from './components/CongestionBoard';
 import { DesignChart } from './components/DesignChart';
 import Header from './components/Header';
@@ -30,6 +31,7 @@ function App() {
       <section className='flex gap-10 py-[57px]'>
         <div className='flex flex-col gap-[23px]'>
           <CongestionBoard congestion={p} />
+          <TimeBoard />
         </div>
         <DesignChart
           title='사람'
