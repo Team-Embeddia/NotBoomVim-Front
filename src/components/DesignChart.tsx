@@ -26,8 +26,8 @@ import { useEffect, useState } from 'react';
 
 interface Props {
   title: string;
-  congestion: number;
-  person?: number
+  congestion: 'High' | 'Medium' | 'Low';
+  person?: number;
   data: object[];
   tick?: number;
   ticks?: number[];
@@ -35,36 +35,44 @@ interface Props {
 
 const chartConfig = {
   desktop: {
-    label: 'Desktop',
+    label: 'person',
     color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig;
 
-export function DesignChart({ title, congestion, person, data, tick, ticks }: Props) {
+export function DesignChart({
+  title,
+  congestion,
+  person,
+  data,
+  tick,
+  ticks,
+}: Props) {
   const [color, setColor] = useState<string>('green');
 
   useEffect(() => {
-    if (congestion > 75) {
-      setColor('text-red');
-    } else if (congestion > 50) {
-      setColor('text-orange');
-    } else if (congestion > 25) {
-      setColor('text-yellow');
-    } else {
-      setColor('text-green');
+    switch(congestion){
+      case 'High':
+        setColor('red');
+        break;
+      case 'Medium':
+        setColor('yellow');
+        break;
+      case 'Low':
+        setColor('green');
+        break;
     }
   }, [congestion]);
 
   return (
     <Card className='w-[590px] h-[431px] px-8 py-7'>
       <CardHeader>
-        <CardTitle className='text-[30px]'>{title}</CardTitle>
-        <CardDescription className='text-[34px]'>
-          <span className={`text-[50px] ${color}`}>{title === '사람' ? person : congestion}</span>
-          {title === '사람' ? '명' : '%'}
+        <CardTitle className='text-[30px] !font-light'>{title}</CardTitle>
+        <CardDescription className='text-[34px] flex items-center font-light'>
+          <span className={`text-[50px] font-semibold !text-[${color}]`}>{person}</span>명
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className='pt-2'>
         <ChartContainer config={chartConfig} className='w-[518px] h-[220px]'>
           <ResponsiveContainer width='100%' height={250}>
             <LineChart accessibilityLayer data={data}>
@@ -74,11 +82,7 @@ export function DesignChart({ title, congestion, person, data, tick, ticks }: Pr
                 tickMargin={30}
                 axisLine={false}
                 domain={[0, `${tick}`]}
-                ticks={
-                  title === '사람' && ticks
-                    ? [0, ...ticks]
-                    : [0, 25, 50, 75, 100]
-                }
+                ticks={ticks && [0, ...ticks]}
                 tick={{ color: '#000000', fontSize: '13px', fontWeight: '500' }}
                 interval={0}
               />
@@ -87,7 +91,7 @@ export function DesignChart({ title, congestion, person, data, tick, ticks }: Pr
                 content={<ChartTooltipContent hideLabel />}
               />
               <Line
-                dataKey='desktop'
+                dataKey='person'
                 type='linear'
                 stroke='blue'
                 strokeWidth={2}
