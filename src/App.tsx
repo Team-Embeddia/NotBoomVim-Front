@@ -1,5 +1,5 @@
 import './App.css';
-import Congestion from './components/Congestion';
+import CongestionBoard from './components/CongestionBoard';
 import { DesignChart } from './components/DesignChart';
 import Header from './components/Header';
 import Image from './components/Image';
@@ -19,6 +19,8 @@ function App() {
     { length: 4 },
     (_, i) => (personTick * (i + 1)) / 4
   );
+
+  
   return (
     <div className='flex flex-col items-center font-Pretendard bg-home'>
       <Header />
@@ -27,7 +29,7 @@ function App() {
       </div>
       <section className='flex gap-10 py-[57px]'>
         <div className='flex flex-col gap-[23px]'>
-          <Congestion congestion={p} />
+          <CongestionBoard congestion={p} />
         </div>
         <DesignChart
           title='사람'

@@ -7,7 +7,7 @@ interface Props {
   congestion: congestionType;
 }
 
-const Congestion = ({ congestion }: Props) => {
+const CongestionBoard = ({ congestion }: Props) => {
   const [data, setData] = useState<{ color: string; text: string }>({
     color: 'red',
     text: '혼잡',
@@ -33,4 +33,4 @@ const Congestion = ({ congestion }: Props) => {
   );
 };
 
-export default Congestion;
+export default CongestionBoard;
