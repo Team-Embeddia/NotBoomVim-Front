@@ -1,4 +1,5 @@
 import './App.css';
+import Congestion from './components/Congestion';
 import { DesignChart } from './components/DesignChart';
 import Header from './components/Header';
 import Image from './components/Image';
@@ -25,6 +26,9 @@ function App() {
         <Image />
       </div>
       <section className='flex gap-10 py-[57px]'>
+        <div className='flex flex-col gap-[23px]'>
+          <Congestion congestion={p} />
+        </div>
         <DesignChart
           title='사람'
           congestion={p}
