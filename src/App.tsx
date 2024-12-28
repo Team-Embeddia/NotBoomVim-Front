@@ -3,7 +3,7 @@ import TimeBoard from './components/TimeBoard';
 import CongestionBoard from './components/CongestionBoard';
 import { DesignChart } from './components/DesignChart';
 import Header from './components/Header';
-import Image from './components/Image';
+import { Image } from './components/Image';
 
 function App() {
   const personData = [
