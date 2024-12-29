@@ -17,23 +17,22 @@ interface Data {
 
 function App() {
   const [personData, setPersonData] = useState<Data[]>([]);
-  const persoData = [
-    { person: 20 },
-    { person: 413 },
-    { person: 647 },
-    { person: 539 },
-    { person: 980 },
-    { person: 841 },
+  const persoData: Data[] = [
+    { id: 1, peopleCount: 10, status: 'High' },
+    { id: 2, peopleCount: 20, status: 'Medium' },
+    { id: 3, peopleCount: 15, status: 'Low' },
+    { id: 4, peopleCount: 25, status: 'High' },
+    { id: 5, peopleCount: 30, status: 'Medium' },
+    { id: 6, peopleCount: 5, status: 'Low' },
   ];
-  const personTick = Math.max(...personData.map((item) => item.peopleCount));
-  const personTicks = Array.from(
-    { length: 4 },
-    (_, i) => (personTick * (i + 1)) / 4
-  );
-
+  
   const fetchData = async () => {
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL}`);
+      const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       if (data) {
         setPersonData(data);
       }
@@ -72,8 +71,6 @@ function App() {
           congestion={personData.length > 11 ? personData[11].status : 'Low'}
           person={personData.length > 11 ? personData[11].peopleCount : 11}
           data={persoData}
-          tick={personTick}
-          ticks={personTicks}
         />
       </section>
     </div>
