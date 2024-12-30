@@ -33,9 +33,25 @@ jobs:
     runs-on: self-hosted
     needs: build
     steps:
-      - name: Deploy to Nginx
+      - name: Verify build directory exists
+        run: |
+          if [ ! -d "build" ]; then
+            echo "Build directory does not exist!";
+            exit 1;
+          fi
+
+      - name: Copy build to Nginx server
         run: |
           sudo cp -r build/* /var/www/html/
       
+      - name: Verify files copied
+        run: |
+          if [ "$(ls -A /var/www/html/)" ]; then
+            echo "Files copied successfully.";
+          else
+            echo "Failed to copy files.";
+            exit 1;
+          fi
+
       - name: Restart Nginx
         run: sudo systemctl restart nginx
