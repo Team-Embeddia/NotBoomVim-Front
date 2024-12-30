@@ -28,30 +28,32 @@ jobs:
         env:
           CI: ""
 
-  deploy:
-    name: Deploy to Nginx Server
-    runs-on: self-hosted
-    needs: build
-    steps:
-      - name: Verify build directory exists
-        run: |
-          if [ ! -d "build" ]; then
-            echo "Build directory does not exist!";
-            exit 1;
-          fi
+    deploy:
+      name: Deploy to Nginx Server
+      runs-on: self-hosted
+      needs: build
+      steps:
+        - name: List files in the repository (for debugging)
+          run: ls -R
 
-      - name: Copy build to Nginx server
-        run: |
-          sudo cp -r build/* /var/www/html/
+        - name: Verify build directory exists
+          run: |
+            if [ ! -d "build" ]; then
+              echo "Build directory does not exist!";
+              exit 1;
+            fi
+
+        - name: Copy build to Nginx server
+          run: |
+            sudo cp -r build/* /var/www/html/
       
-      - name: Verify files copied
-        run: |
-          if [ "$(ls -A /var/www/html/)" ]; then
-            echo "Files copied successfully.";
-          else
-            echo "Failed to copy files.";
-            exit 1;
-          fi
+        - name: Verify files copied
+          run: |
+            if [ "$(ls -A /var/www/html/)" ]; then
+              echo "Files copied successfully.";
+            else
+              echo "Failed to copy files.";
+              exit 1;
 
-      - name: Restart Nginx
-        run: sudo systemctl restart nginx
+        - name: Restart Nginx
+          run: sudo systemctl restart nginx
