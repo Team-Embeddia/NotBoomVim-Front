@@ -26,6 +26,8 @@ interface Props {
   congestion: 'High' | 'Medium' | 'Low';
   person?: number;
   data: Data[];
+  tick: number[];
+  ticks: number[];
 }
 
 const chartConfig = {
@@ -35,24 +37,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function DesignChart({ title, congestion, person, data }: Props) {
+export function DesignChart({ title, congestion, person, data, tick, ticks }: Props) {
   const [color, setColor] = useState<string>('');
-  const [tick, setTick] = useState<number[]>([0, 10]);
-  const [ticks, setTicks] = useState<number[]>([0, 10]);
-
-  const fetchTick = () => {
-    const people = Math.max(...data.map((item) => item.peopleCount));
-    console.log(data);
-    setTick([0, people]);
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchTick();
-      setTicks([0, tick[1] / 4, tick[1] / 2, (tick[1] * 3) / 4, tick[1]]);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     switch (congestion) {

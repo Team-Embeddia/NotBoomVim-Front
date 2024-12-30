@@ -23,6 +23,8 @@ interface People {
 function App() {
   const [Data, setData] = useState<Data[]>([]);
   const [person, setPerson] = useState<People>();
+  const [tick, setTick] = useState<number[]>([0, 10]);
+  const [ticks, setTicks] = useState<number[]>([0, 10]);
 
   const fetchData = async () => {
     try {
@@ -70,6 +72,16 @@ function App() {
     }
   };
 
+  const fetchTick = () => {
+    const people = Math.max(...Data.map((item) => item.peopleCount));
+    setTick([0, people]);
+  };
+
+  useEffect(() => {
+    fetchTick();
+    setTicks([0, tick[1] / 4, tick[1] / 2, (tick[1] * 3) / 4, tick[1]]);
+  }, [Data]);
+
   useEffect(() => {
     fetchData();
     const intervalId = setInterval(() => {
@@ -99,6 +111,8 @@ function App() {
           congestion={(person?.status && person.status) || 'Low'}
           person={(person?.people_count && person.people_count) || 0}
           data={Data}
+          tick={tick}
+          ticks={ticks}
         />
       </section>
     </div>
