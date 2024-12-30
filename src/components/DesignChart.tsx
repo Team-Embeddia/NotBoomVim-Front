@@ -42,22 +42,22 @@ const chartConfig = {
 
 export function DesignChart({ title, congestion, person, data }: Props) {
   const [color, setColor] = useState<string>('');
-  const [tick, setTick] = useState<number[]>([0, 1000]);
-  const [ticks, setTicks] = useState<number[]>([0, 1000]);
+  const [tick, setTick] = useState<number[]>([0, 10]);
+  const [ticks, setTicks] = useState<number[]>([0, 10]);
 
   const fetchTick = () => {
     const people = Math.max(...data.map((item) => item.peopleCount));
-    console.log(people);
+    console.log(data)
     setTick([0, people]);
   };
 
   useEffect(() => {
-    fetchTick();
+    const interval = setInterval(() => {
+      fetchTick();
+      setTicks([0, tick[1] / 4, tick[1] / 2, (tick[1] * 3) / 4, tick[1]]);
+    }, 10000);
+    return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    setTicks([0, tick[1] / 4, tick[1] / 2, (tick[1] * 3) / 4, tick[1]]);
-  }, [tick]);
 
   useEffect(() => {
     switch (congestion) {

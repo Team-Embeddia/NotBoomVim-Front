@@ -17,14 +17,6 @@ interface Data {
 
 function App() {
   const [personData, setPersonData] = useState<Data[]>([]);
-  const persoData: Data[] = [
-    { id: 1, peopleCount: 10, status: 'High' },
-    { id: 2, peopleCount: 20, status: 'Medium' },
-    { id: 3, peopleCount: 15, status: 'Low' },
-    { id: 4, peopleCount: 25, status: 'High' },
-    { id: 5, peopleCount: 30, status: 'Medium' },
-    { id: 6, peopleCount: 5, status: 'Low' },
-  ];
   
   const fetchData = async () => {
     try {
@@ -62,15 +54,15 @@ function App() {
       <section className='flex gap-10 py-[57px]'>
         <div className='flex flex-col gap-[23px]'>
           <CongestionBoard
-            congestion={personData.length > 11 ? personData[11].status : 'Low'}
+            congestion={personData.length===12 ? personData[11].status : 'Low'}
           />
           <TimeBoard />
         </div>
         <DesignChart
           title='사람'
-          congestion={personData.length > 11 ? personData[11].status : 'Low'}
-          person={personData.length > 11 ? personData[11].peopleCount : 11}
-          data={persoData}
+          congestion={personData.length===12 ? personData[11].status : 'Low'}
+          person={personData.length===12 ? personData[11].peopleCount : 6}
+          data={personData}
         />
       </section>
     </div>
