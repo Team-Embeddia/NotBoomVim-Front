@@ -25,7 +25,7 @@ jobs:
           echo "VITE_SERVER_URL=http://api.zzunipark.com/BoomVim/anHour" >> .env
           echo "VITE_IMG_URL=http://158.180.66.65:5000/get_image" >> .env
           echo "VITE_AI_IMG_URL=http://158.180.66.65:5000/get_image_output" >> .env
-
+          echo "VITE_PEOPLE_URL = http://158.180.66.65:5001/aggregate_status" >> .env
 
       - name: Install dependencies
         run: npm install
