@@ -28,9 +28,6 @@ jobs:
         env:
           CI: ""
 
-      - name: Check build directory
-        run: ls -l build/
-
       - name: run pwd
         run: pwd
 
