@@ -93,7 +93,7 @@ html, body {
   font-display: swap;
   src:
     local('Pretendard SemiBold'),
-    url('/fonts/Pretendard-SemiBold.woff2') format('woff2'),
+    url('https://mirror.zzunipark.com/_notboomvim/NotBoomVim-Front/src/asset/fonts/Pretendard-SemiBold.woff2') format('woff2'),
 }
 
 @font-face {
@@ -102,7 +102,7 @@ html, body {
   font-display: swap;
   src:
     local('Pretendard Medium'),
-    url('/fonts/Pretendard-Medium.woff2') format('woff2'),
+    url('https://mirror.zzunipark.com/_notboomvim/NotBoomVim-Front/src/asset/fonts/Pretendard-Medium.woff2') format('woff2'),
 }
 
 @font-face {
@@ -111,5 +111,5 @@ html, body {
   font-display: swap;
   src:
     local('Pretendard Light'),
-    url('/fonts/Pretendard-Light.woff2') format('woff2'),
+    url('https://mirror.zzunipark.com/_notboomvim/NotBoomVim-Front/src/asset/fonts/Pretendard-Light.woff2') format('woff2'),
 }

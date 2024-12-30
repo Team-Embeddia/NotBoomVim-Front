@@ -2,7 +2,7 @@ import { CardDescription } from "./ui/card";
 
 interface Props {
   color: string;
-  person: number;
+  person: number | string;
 }
 
 const Count = ({ color, person }: Props) => {

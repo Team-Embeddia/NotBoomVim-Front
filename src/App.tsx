@@ -1,4 +1,3 @@
-import './App.css';
 import TimeBoard from './components/TimeBoard';
 import CongestionBoard from './components/CongestionBoard';
 import { DesignChart } from './components/DesignChart';
@@ -35,6 +34,9 @@ function App() {
       });
       if (data) {
         setData(data);
+        const people = Math.max(...data.map((item: any) => item.peopleCount));
+        setTick([0, people]);
+        setTicks([0, people / 4, people / 2, (people * 3) / 4, people]);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -72,13 +74,7 @@ function App() {
     }
   };
 
-  const fetchTick = () => {
-    const people = Math.max(...Data.map((item) => item.peopleCount));
-    setTick([0, people]);
-  };
-
   useEffect(() => {
-    fetchTick();
     setTicks([0, tick[1] / 4, tick[1] / 2, (tick[1] * 3) / 4, tick[1]]);
   }, [Data]);
 

@@ -58,7 +58,7 @@ export function DesignChart({ title, congestion, person, data, tick, ticks }: Pr
     <Card className='w-[590px] h-[431px] px-8 py-7'>
       <CardHeader>
         <CardTitle className='text-[30px] !font-light'>{title}</CardTitle>
-        <Count color={color} person={person ?? 0} />
+        <Count color={color} person={person ?? '로딩중'} />
       </CardHeader>
       <CardContent className='pt-2'>
         <ChartContainer config={chartConfig} className='w-[518px] h-[220px]'>
