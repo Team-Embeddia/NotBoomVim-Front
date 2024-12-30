@@ -2,13 +2,7 @@
 
 import { CartesianGrid, Line, LineChart, YAxis } from 'recharts';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import {
   ChartConfig,
@@ -17,6 +11,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { useEffect, useState } from 'react';
+import Count from './Count';
 
 type congestionType = 'High' | 'Medium' | 'Low';
 
@@ -47,7 +42,7 @@ export function DesignChart({ title, congestion, person, data }: Props) {
 
   const fetchTick = () => {
     const people = Math.max(...data.map((item) => item.peopleCount));
-    console.log(data)
+    console.log(data);
     setTick([0, people]);
   };
 
@@ -77,15 +72,7 @@ export function DesignChart({ title, congestion, person, data }: Props) {
     <Card className='w-[590px] h-[431px] px-8 py-7'>
       <CardHeader>
         <CardTitle className='text-[30px] !font-light'>{title}</CardTitle>
-        <CardDescription className='text-[34px] flex items-center font-light'>
-          <span
-            className={`text-[50px] font-semibold`}
-            style={{ color: color }}
-          >
-            {person}
-          </span>
-          명
-        </CardDescription>
+        <Count color={color} person={person ?? 0} />
       </CardHeader>
       <CardContent className='pt-2'>
         <ChartContainer config={chartConfig} className='w-[518px] h-[220px]'>

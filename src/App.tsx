@@ -15,9 +15,15 @@ interface Data {
   status: congestionType;
 }
 
+interface People {
+  people_count: number;
+  status: congestionType;
+}
+
 function App() {
-  const [personData, setPersonData] = useState<Data[]>([]);
-  
+  const [Data, setData] = useState<Data[]>([]);
+  const [person, setPerson] = useState<People>();
+
   const fetchData = async () => {
     try {
       const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL}`, {
@@ -26,7 +32,30 @@ function App() {
         },
       });
       if (data) {
-        setPersonData(data);
+        setData(data);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          console.log(
+            `Error: ${error.response.status} - ${error.response.data}`
+          );
+        } else {
+          console.log('Error: No response received');
+        }
+      }
+    }
+  };
+
+  const fetchPeople = async () => {
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_PEOPLE_URL}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (data) {
+        setPerson(data);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -43,6 +72,13 @@ function App() {
 
   useEffect(() => {
     fetchData();
+    const intervalId = setInterval(() => {
+      fetchData();
+    }, 300000);
+    setInterval(() => {
+      fetchPeople();
+    }, 3000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -54,15 +90,15 @@ function App() {
       <section className='flex gap-10 py-[57px]'>
         <div className='flex flex-col gap-[23px]'>
           <CongestionBoard
-            congestion={personData.length===12 ? personData[11].status : 'Low'}
+            congestion={(person?.status && person.status) || 'Low'}
           />
           <TimeBoard />
         </div>
         <DesignChart
           title='사람'
-          congestion={personData.length===12 ? personData[11].status : 'Low'}
-          person={personData.length===12 ? personData[11].peopleCount : 6}
-          data={personData}
+          congestion={(person?.status && person.status) || 'Low'}
+          person={(person?.people_count && person.people_count) || 0}
+          data={Data}
         />
       </section>
     </div>
