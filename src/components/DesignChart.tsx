@@ -1,6 +1,12 @@
 'use client';
 
-import { CartesianGrid, Line, LineChart, YAxis } from 'recharts';
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  YAxis,
+} from 'recharts';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -28,6 +34,7 @@ interface Props {
   data: Data[];
   tick: number[];
   ticks: number[];
+  loading: boolean;
 }
 
 const chartConfig = {
@@ -37,7 +44,15 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function DesignChart({ title, congestion, person, data, tick, ticks }: Props) {
+export function DesignChart({
+  title,
+  congestion,
+  person,
+  data,
+  tick,
+  ticks,
+  loading,
+}: Props) {
   const [color, setColor] = useState<string>('');
 
   useEffect(() => {
@@ -55,42 +70,44 @@ export function DesignChart({ title, congestion, person, data, tick, ticks }: Pr
   }, [congestion]);
 
   return (
-    <Card className='w-[590px] h-[431px] px-8 py-7'>
+    <Card className='w-[590px] h-[431px] px-8 py-7 mobile:w-full'>
       <CardHeader>
         <CardTitle className='text-[30px] !font-light'>{title}</CardTitle>
-        <Count color={color} person={person ?? '로딩중'} />
+        <Count color={color} person={person ?? 0} loading={loading} />
       </CardHeader>
       <CardContent className='pt-2'>
-        <ChartContainer config={chartConfig} className='w-[518px] h-[220px]'>
-          <LineChart accessibilityLayer data={data}>
-            <CartesianGrid vertical={false} horizontal={true} />
-            <YAxis
-              tickLine={false}
-              tickMargin={30}
-              axisLine={false}
-              domain={tick}
-              ticks={ticks}
-              tick={{ color: '#000000', fontSize: '13px', fontWeight: '500' }}
-              interval={0}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Line
-              dataKey='peopleCount'
-              type='linear'
-              stroke='blue'
-              strokeWidth={2}
-              dot={{
-                fill: 'blue',
-              }}
-              activeDot={{
-                r: 6,
-              }}
-            />
-          </LineChart>
-        </ChartContainer>
+        <ResponsiveContainer width='100%' height={220}>
+          <ChartContainer config={chartConfig} className='w-[518px] h-[220px]'>
+            <LineChart accessibilityLayer data={data}>
+              <CartesianGrid vertical={false} horizontal={true} />
+              <YAxis
+                tickLine={false}
+                tickMargin={30}
+                axisLine={false}
+                domain={tick}
+                ticks={ticks}
+                tick={{ color: '#000000', fontSize: '13px', fontWeight: '500' }}
+                interval={0}
+              />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Line
+                dataKey='peopleCount'
+                type='linear'
+                stroke='blue'
+                strokeWidth={2}
+                dot={{
+                  fill: 'blue',
+                }}
+                activeDot={{
+                  r: 6,
+                }}
+              />
+            </LineChart>
+          </ChartContainer>
+        </ResponsiveContainer>
       </CardContent>
     </Card>
   );

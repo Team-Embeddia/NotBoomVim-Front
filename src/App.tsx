@@ -24,6 +24,7 @@ function App() {
   const [person, setPerson] = useState<People>();
   const [tick, setTick] = useState<number[]>([0, 10]);
   const [ticks, setTicks] = useState<number[]>([0, 10]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchData = async () => {
     try {
@@ -49,8 +50,9 @@ function App() {
         }
       }
     }
+    setLoading(false);
   };
-
+  
   const fetchPeople = async () => {
     try {
       const { data } = await axios.get(`${import.meta.env.VITE_PEOPLE_URL}`, {
@@ -73,13 +75,14 @@ function App() {
       }
     }
   };
-
+  
   useEffect(() => {
     setTicks([0, tick[1] / 4, tick[1] / 2, (tick[1] * 3) / 4, tick[1]]);
   }, [Data]);
-
+  
   useEffect(() => {
     fetchData();
+    fetchPeople();
     const intervalId = setInterval(() => {
       fetchData();
     }, 300000);
@@ -92,13 +95,14 @@ function App() {
   return (
     <div className='flex flex-col items-center font-Pretendard bg-home'>
       <Header />
-      <div className='pt-[61px]'>
+      <div className='flex flex-col items-center w-full pt-[61px] mobile:px-5'>
         <Image />
       </div>
-      <section className='flex gap-10 py-[57px]'>
+      <section className='flex justify-center w-full gap-10 py-[57px] mobile:px-5 mobile:flex-col'>
         <div className='flex flex-col gap-[23px]'>
           <CongestionBoard
             congestion={(person?.status && person.status) || 'Low'}
+            loading={loading}
           />
           <TimeBoard />
         </div>
@@ -109,6 +113,7 @@ function App() {
           data={Data}
           tick={tick}
           ticks={ticks}
+          loading={loading}
         />
       </section>
     </div>

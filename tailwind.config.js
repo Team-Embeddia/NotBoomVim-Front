@@ -12,7 +12,7 @@ export default {
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-				home: '#F7F7F9',
+        home: '#F7F7F9',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
@@ -55,6 +55,9 @@ export default {
       fontFamily: {
         Pretendard: ['Pretendard'],
       },
+    },
+    screens: {
+      mobile: { max: '1330px' },
     },
   },
   plugins: [require('tailwindcss-animate')],

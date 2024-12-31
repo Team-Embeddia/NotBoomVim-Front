@@ -16,7 +16,7 @@ const TimeBoard = () => {
   const second = time.getSeconds().toString().padStart(2, '0');
 
   return (
-    <Card className='w-[590px] h-[204px] flex items-center justify-center'>
+    <Card className='w-[590px] h-[204px] flex items-center justify-center mobile:hidden'>
       <p className='font-bold text-[128px] text-center'>
         {hour}:{minute}
         <span className='text-[64px]'>:{second}</span>

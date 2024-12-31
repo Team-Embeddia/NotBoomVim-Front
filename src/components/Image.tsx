@@ -18,21 +18,21 @@ export function Image() {
       setAIImageUrl(`${import.meta.env.VITE_AI_IMG_URL}?t=${Date.now()}`);
     };
 
-    updateImages(); // 초기 이미지 설정
-    const imageInterval = setInterval(updateImages, 3000);
+    updateImages();
+    const imageInterval = setInterval(updateImages, 1000);
 
     return () => clearInterval(imageInterval);
   }, []);
 
   return (
-    <Carousel className='w-[1222px] h-[643px] z-0'>
+    <Carousel className='w-[1222px] h-[643px] z-0 mobile:w-full mobile:h-fit'>
       <CarouselContent>
         <CarouselItem>
           <div className='p-1'>
             <Card className='h-[643px]'>
               <CardContent className='flex items-center justify-center h-full rounded-xl'>
                 <img
-                  src={imageUrl} // 상태에서 가져온 imageUrl 사용
+                  src={imageUrl}
                   alt='Image'
                   className='object-cover w-full h-full rounded-xl'
                 />
@@ -42,10 +42,10 @@ export function Image() {
         </CarouselItem>
         <CarouselItem>
           <div className='p-1'>
-            <Card className='h-[643px]'>
+            <Card className='h-[643px] mobile:h-fit'>
               <CardContent className='flex items-center justify-center h-full rounded-xl'>
                 <img
-                  src={aiImageUrl} // 상태에서 가져온 aiImageUrl 사용
+                  src={aiImageUrl}
                   alt='AI Image'
                   className='object-cover w-full h-full rounded-xl'
                 />
@@ -54,8 +54,8 @@ export function Image() {
           </div>
         </CarouselItem>
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className='mobile:hidden'/>
+      <CarouselNext className='mobile:hidden'/>
     </Carousel>
   );
 }
