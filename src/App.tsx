@@ -85,7 +85,7 @@ function App() {
     fetchPeople();
     const intervalId = setInterval(() => {
       fetchData();
-    }, 300000);
+    }, 5000);
     setInterval(() => {
       fetchPeople();
     }, 3000);

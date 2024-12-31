@@ -34,7 +34,10 @@ export function Image() {
                 <img
                   src={imageUrl}
                   alt='Image'
+                  width={122}
                   className='object-cover w-full h-full rounded-xl'
+                  fetchPriority='high'
+                  loading='lazy'
                 />
               </CardContent>
             </Card>
