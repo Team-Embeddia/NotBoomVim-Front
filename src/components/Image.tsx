@@ -19,7 +19,7 @@ export function Image() {
     };
 
     updateImages();
-    const imageInterval = setInterval(updateImages, 1000);
+    const imageInterval = setInterval(updateImages, 5000);
 
     return () => clearInterval(imageInterval);
   }, []);
